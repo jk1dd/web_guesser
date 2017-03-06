@@ -6,7 +6,14 @@ SECRET_NUMBER = rand(0..100)
 get '/' do
   guess = params["guess"].to_i
   message = checker(guess)
-  erb :index, :locals => {:background => @background, :guess => guess, :message => message}
+  cheat = params["cheat"]
+  erb :index, :locals => {:cheat => cheat_mode(cheat), :background => @background, :guess => guess, :message => message}
+end
+
+def cheat_mode(cheat)
+  if cheat == "true"
+    "The number is #{SECRET_NUMBER}, but you cheated!"
+  end
 end
 
 def checker(guess)
